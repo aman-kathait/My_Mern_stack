@@ -1,0 +1,17 @@
+p{
+  color: brown;
+}
+#div1{
+  background-color: rgba(230, 203, 149, 0.8);
+}
+main{
+  color: cadetblue;
+}
+#bg{
+  background-image:url(/images/bluebg.jpg);
+  background-position: bottom;
+  background-size: contain;
+}
+#t1{
+  color: antiquewhite;
+}

@@ -1,0 +1,27 @@
+.container > p{
+  color: brown;
+}
+h2 + p{
+  color: blueviolet;
+}
+h2 ~ p{
+  font-style: italic;
+}
+h1{
+  background-color: aquamarine;
+}
+h1:hover{
+  color: crimson;
+  font-style: italic;
+  text-decoration: underline red;
+  
+}
+h1:active{
+  background-color: chocolate;
+}
+h6:focus{
+  background-color: chartreuse;
+}
+input:focus{
+  background-color: rgb(233, 233, 8);
+}

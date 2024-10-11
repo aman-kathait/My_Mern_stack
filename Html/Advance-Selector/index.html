@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advance Selectors</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="store">
+    <header>
+      <h1>Welcome to Mystore</h1>
+      <nav>
+        <ul class="main-nav">
+          <li>Home</li>
+          <li>About</li>
+          <li>
+            Products
+            <ul>
+              <li>Electronics</li>
+              <li>Books</li>
+            </ul>
+          </li>
+          <li>Contact</li>
+        </ul>
+      </nav>
+    </header>
+    <section>
+      <h2>Features Products</h2>
+      <div class="product" data-category="electronics">
+        <img src="laptop.jpg" alt="laptop" height="200px" width="400px">
+        <p>Desc. of product goes here.</p>
+        <button type="submit">Buy Now</button>
+      </div>
+      <div class="product" data-category="books">
+        <img src="book.jpg" alt="Book" height="200px" width="200px
+        ">
+        <p>Desc. of another product</p>
+        <button type="submit">Buy now</button>
+      </div>
+    </section>
+    <footer>
+      <p>Copyright 2023 by mystore. rights </p>
+      <p>Follow us on <a href="#" class="social">Social Media</a></p>
+    </footer>
+  </div>
+  
+</body>
+</html>

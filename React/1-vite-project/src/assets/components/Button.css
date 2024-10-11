@@ -1,0 +1,19 @@
+*{
+  border: none;
+}
+
+.greenbtn{
+  background-color: rgb(44, 179, 44);
+  margin: 10px;
+  border-radius: 5px;
+}
+
+.redbtn{
+  background-color: red;
+  margin: 10px;
+}
+
+.bluebtn{
+  background-color: blue;
+  margin: 10px;
+}

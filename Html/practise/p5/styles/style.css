@@ -1,0 +1,45 @@
+*{
+  margin: 0px;
+  padding: 0px;
+}
+a{
+  color: aqua;
+  font-size: medium;
+}
+#navbar{
+  word-spacing: 30px;
+  background-color: black;
+  height: 30px;
+}
+
+.b{
+  height: 400px;
+  width: 400px;
+  background-color: greenyellow;
+  border-radius: 50%;
+}
+.container{
+  margin: 20px;
+  border: 1px solid black;
+  height: 200px;
+  width: 800px;
+  display: inline-block;
+}
+.box{
+  position: relative;
+  height: 50px;
+  width: 100px;
+  background-color: bisque;
+  border: 2px solid saddlebrown;
+  margin: 10px;
+  text-align: center;
+}
+
+#b1{
+  float: right;
+}
+#z1{
+  background-color: aquamarine;
+  top: 40px;
+  z-index: -2;
+}

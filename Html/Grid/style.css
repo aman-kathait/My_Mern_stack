@@ -1,0 +1,22 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+.container{
+  background-color: wheat;
+  display: grid;
+  grid-template-rows: 50px 50px 50px;
+  grid-template-columns: 1fr minmax(200px,1fr) 1fr;
+  gap: 2px;
+  /* overflow: auto; */
+  grid-auto-flow: column;
+}
+.box{
+  border: 2px solid brown;
+  background-color: tomato;
+  text-align: center;
+  padding: 10px;
+  font-size: 20px;
+  justify-items: center;
+  align-items: center;
+}

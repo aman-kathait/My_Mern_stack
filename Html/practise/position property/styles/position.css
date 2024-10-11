@@ -1,0 +1,28 @@
+*{
+  padding: 0px;
+  margin: 0px;
+}
+.box{
+  background-color: gold;
+  height: 50px;
+  width: 100px;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 2px solid black;
+}
+#b1{
+  position: static;
+}
+#b2{
+  position: relative;
+  left: 200px;
+}
+#b3{
+  position: absolute;
+  top: 900px;
+  left: 500px;
+}
+#b4{
+  position: fixed;
+}

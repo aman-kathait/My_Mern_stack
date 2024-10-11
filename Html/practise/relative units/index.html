@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Learning relative units</title>
+  <style>
+    *{
+      font-size: 60px;
+    } 
+     
+    
+    .box{
+      height: 400px;
+      width: 400px;
+      background-color: deepskyblue;
+
+    }
+    #first{
+      font-size: 40px;
+    }
+
+    #sec{
+      background-color: coral;
+      width: 80%;
+      height: 50%;
+      font-size: 20px;
+    }
+    #third{
+      background-color: brown;
+      font-size: 2em;
+    }
+    #four{
+      background-color: bisque;
+      font-size: 20px;
+      height:50vh;
+      width:90vw;
+    }
+  </style>
+</head>
+<body>
+  Body
+  <div id="first" class="box">First
+    <div id="sec" class="box">Second
+      <div id="third" class="box">Third</div>
+    </div>
+  </div>
+  <br><hr>
+  <div id="four">Hello this is testing of vh/vw</div>
+</body>
+</html>

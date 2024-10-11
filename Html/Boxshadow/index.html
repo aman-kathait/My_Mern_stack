@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Box shadow</title>
+  <style>
+    .box{
+      background-color: greenyellow;
+      height: 100px;
+      width: 100px;
+      margin:10px;
+    }
+    @media screen and (min-width:300px) and (max-width:400px){
+      .box{
+        background-color: red;
+      }
+    }
+    @media screen and (min-width:400px){
+      .box{
+        background-color: blue;
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="box">My box</div>
+</body>
+</html>

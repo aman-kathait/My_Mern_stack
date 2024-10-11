@@ -1,0 +1,25 @@
+div[class="product"]{
+  border: 1px solid gray;
+}
+div[data-category="electronics"]{
+  background-color: aquamarine;
+}
+ul.main-nav>li{
+  color: darkblue;
+}
+ul.main-nav>li>ul>li{
+  margin-left: 20px;
+}
+img+p{
+  font-weight: bold;
+}
+img~p{
+  font-size: 12px;
+}
+button:hover{
+  background-color: greenyellow;
+  color: white;
+}
+ul.main-nav>li{
+  font-weight: bold;
+}
