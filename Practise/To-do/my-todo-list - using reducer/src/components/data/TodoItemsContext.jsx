@@ -1,25 +1,32 @@
-import { useState,createContext } from "react";
+import { createContext, useReducer } from "react";
 import initialtodoItems from "./initTodoItems";
+import TodoItemsReducer from "./TodoItemsReducer";
 
+export const TodoItemsContext = createContext();
 
+export const TodoItemsProvider = ({children}) => {
 
-export const TodoItemsContext=createContext();
-export const TodoItemsProvider=({children})=>{
-  
-  const [todoItems, setTodoItems]=useState(initialtodoItems);
-  
-  const addTodoItem= (todoText,todoDate)=>{
-    setTodoItems(currentItems=>{
-      return [...currentItems,{id:todoText,todoText,todoDate}]
+  const [todoItems, dispatch] = useReducer(TodoItemsReducer, initialtodoItems);
+
+  const addTodoItem = (todoText, todoDate) => {
+    dispatch({
+      type: 'ADD_ITEM',
+      payload: {
+        todoText, todoDate
+      }
     })
   }
-  const deleteTodoItem=(todoId)=>{
-    setTodoItems(currentItems=>{
-      return currentItems.filter(item=> item.id !==todoId);
+
+  const deleteTodoItem = (todoId) => {
+    dispatch({
+      type: 'DELETE_ITEM',
+      payload: {
+        todoId
+      }
     })
-    
   }
-  return <TodoItemsContext.Provider value={{todoItems,addTodoItem,deleteTodoItem}}>
+
+  return <TodoItemsContext.Provider value={{todoItems, addTodoItem, deleteTodoItem}}>
     {children}
   </TodoItemsContext.Provider>
 }
