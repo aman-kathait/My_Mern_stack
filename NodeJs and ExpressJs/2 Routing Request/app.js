@@ -32,9 +32,14 @@ const requestHandler = (req, res) => {
 
     req.on('end',()=>{
       const body=Buffer.concat(arr).toString();
-      console.log(body);
-    })
-    fs.writeFileSync('buy.txt','Myntra app');
+      const urlParms=new URLSearchParams(body);
+      const bodyJson={};
+      for (const [key,value] of urlParms.entries()){
+        bodyJson[key]=value;
+      }
+      fs.writeFileSync('buy.txt',JSON.stringify(bodyJson));
+    });
+   
     res.statusCode=302;
     res.setHeader('Location','/products')
   }
