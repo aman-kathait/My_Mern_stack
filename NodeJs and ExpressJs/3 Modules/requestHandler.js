@@ -1,6 +1,5 @@
-const http = require("http");
 const fs=require('fs');
-console.log("I was here");
+const { request } = require('http');
 
 const requestHandler = (req, res) => {
   if (req.url === "/") {
@@ -22,6 +21,7 @@ const requestHandler = (req, res) => {
     </body>
     </html>
     `);
+    res.end();
   } else if (req.url==="/buy-product") {
     console.log("Form data submitted");
     const arr=[];
@@ -37,11 +37,12 @@ const requestHandler = (req, res) => {
       for (const [key,value] of urlParms.entries()){
         bodyJson[key]=value;
       }
-      fs.writeFileSync('buy.txt',JSON.stringify());
-    });
-   
-    res.statusCode=302;
-    res.setHeader('Location','/products')
+      fs.writeFile('buy.txt',JSON.stringify(bodyJson),(err)=>{
+        res.statusCode=302;
+        res.setHeader('Location','/products')
+        res.end();
+      });
+    }); 
   }
   
   else if (req.url === "/products") {
@@ -56,6 +57,7 @@ const requestHandler = (req, res) => {
         </body>
       </html>
       `);
+      res.end();
   } else {
     res.statusCode=404;
     res.write(`
@@ -69,12 +71,10 @@ const requestHandler = (req, res) => {
           </body>
         </html>
         `);
+        res.end();
   }
-  res.end();
 };
 
-const server = http.createServer(requestHandler);
-const PORT = 3001;
-server.listen(PORT, () => {
-  console.log(`Server running at: https//localhost:${3001}`);
-});
+module.exports ={
+  handler:requestHandler
+};
