@@ -1,13 +1,14 @@
 const express = require("express");
 const app = express();
 
-app.use("/", (req, res, next) => {
-  console.log("First Middleware");
+app.use((req, res, next) => {
+  console.log("Request Received");
   next();
 });
 
 app.use("/", (req, res, next) => {
-  console.log("Second Middleware");
+  console.log("Second middleware");
+  
   next();
 });
 
