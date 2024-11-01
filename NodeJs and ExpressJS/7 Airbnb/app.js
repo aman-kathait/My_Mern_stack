@@ -1,14 +1,15 @@
+const path=require('path');
+
 const express=require('express');
-const fs = require('fs');
-const bodyParser=require('body-parser')
+const bodyParser=require('body-parser');
+
+const hostRouter=require("./hostRouter");
+const storeRouter=require("./storeRouter");
+
 const app=express();
-
-app.use(bodyParser.urlencoded());
-
-app.use((req,res, next)=>{
-  console.log("Request Received ",req.url,req.method,req.body);
-  next();
-});
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(storeRouter);
+app.use("/host",hostRouter);
 
 app.use((req,res,next)=>{
   res.statusCode=404;
