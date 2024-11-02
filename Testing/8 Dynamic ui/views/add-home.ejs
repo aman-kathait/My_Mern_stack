@@ -1,0 +1,25 @@
+<%- include('partials/nav') %>
+</head>
+<body class="bg-gray-50 font-sans flex flex-col min-h-screen">
+    <%- include('partials/head') %>
+
+  <!-- Main Content -->
+  <main class="flex-grow flex items-center justify-center">
+    <div class="bg-white shadow-lg rounded-lg p-8 max-w-md w-full">
+      <h2 class="text-3xl font-bold text-blue-600 text-center mb-6">Add Your Home</h2>
+      <form action="/host/add-home" method="post" class="space-y-4">
+        <input type="text" name="houseName" placeholder="Enter your house name" required class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">
+        <input type="submit" value="Add Home" class="w-full bg-blue-500 text-white font-semibold py-2 rounded-lg hover:bg-blue-600 transition duration-200 cursor-pointer">
+      </form>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white shadow mt-8">
+    <div class="max-w-7xl mx-auto px-6 py-4 text-center text-gray-600">
+      &copy; 2024 Hamara Airbnb. All rights reserved.
+    </div>
+  </footer>
+  
+</body>
+</html>
