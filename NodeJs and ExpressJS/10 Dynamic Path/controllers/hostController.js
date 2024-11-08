@@ -34,6 +34,17 @@ exports.postEditHome=(req,res,next)=>{
   })
 }
 
+exports.postDeleteHome = (req, res, next) => {
+  const homeId = req.params.homeId;
+  console.log("Came to delete ", homeId);
+    Home.deleteById(homeId,error=>{
+      if (error){
+        console.log("Error occured while deleting home",error);
+      }
+      res.redirect("/host/host-homes");
+    })
+  }
+
 exports.getHostHomes = (req, res, next) => {
   Home.fetchAll(registeredHomes => {
     res.render("host/host-homes", { homes: registeredHomes, pageTitle: "Tumahara airbnb" });
@@ -43,7 +54,6 @@ exports.getHostHomes = (req, res, next) => {
 exports.postAddHome = (req, res, next) => {
   const {houseName, price, location, rating, photoUrl} = req.body;
   const newHome = new Home(houseName, price, location, rating, photoUrl);
-
   newHome.save(error => {
     if (error) {
       res.redirect('/');

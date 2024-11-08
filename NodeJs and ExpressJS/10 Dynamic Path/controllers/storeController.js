@@ -43,3 +43,12 @@ exports.getHomeDetails = (req, res, next) => {
     res.render("store/home-detail", { home: home, pageTitle: "Home Detail" });
   })
 }
+exports.postRemoveFavourite=(req,res,next)=>{
+  const homeId=req.params.homeId;
+  Favourite.deleteById(homeId,error=>{
+    if (error) {
+      console.log("Error while removing from favourites",error);
+    }
+    res.redirect("/favourites");
+  })
+}
