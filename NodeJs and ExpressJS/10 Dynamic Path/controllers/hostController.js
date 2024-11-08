@@ -1,7 +1,7 @@
 const Home = require('./../models/Home');
 
 exports.getAddHome = (req, res, next) => {
-  res.render("host/edit-home", {pageTitle: 'Host Your Home'});
+  res.render("host/edit-home", {editing:false,pageTitle: 'Host Your Home'});
 };
 
 exports.getEditHome = (req, res, next) => {
@@ -17,9 +17,22 @@ exports.getEditHome = (req, res, next) => {
       return res.redirect("/host/host-homes");
     }
     console.log(homeId,editing,home);
-    res.render("host/edit-home", {pageTitle: 'Edit Your Home'});
+    res.render("host/edit-home", {home:home,editing:editing,pageTitle: 'Edit Your Home'});
   })
 };
+
+exports.postEditHome=(req,res,next)=>{
+  const {id,houseName, price, location, rating, photoUrl} = req.body;
+  const newHome = new Home(houseName, price, location, rating, photoUrl);
+  newHome.id=id;
+  newHome.save((error)=>{
+    if (error) {
+      console.log("Error while updating home");
+    } else{
+      res.redirect("/host/host-homes");
+    }
+  })
+}
 
 exports.getHostHomes = (req, res, next) => {
   Home.fetchAll(registeredHomes => {
@@ -39,3 +52,4 @@ exports.postAddHome = (req, res, next) => {
     }
   });
 }
+
