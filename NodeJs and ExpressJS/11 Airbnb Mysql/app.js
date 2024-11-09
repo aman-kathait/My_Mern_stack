@@ -15,6 +15,13 @@ const app = express();
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
+const airbnbDb=require('./util/database-util');
+const { log } = require("console");
+
+airbnbDb.execute("SELECT * FROM homes").then(([rows,field])=>{
+  console.log(rows);
+})
+
 app.use(express.static(path.join(rootDir, "public")));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(storeRouter);
