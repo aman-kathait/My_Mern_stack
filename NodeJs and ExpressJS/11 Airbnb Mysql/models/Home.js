@@ -1,50 +1,29 @@
-const fs = require('fs');
-const path = require('path');
-const rootDir = require('./../util/path-util');
+const Favourite=require("./Favourite");
+const airbnbDb=require('../util/database-util');
 
-const homeFilePath = path.join(rootDir, 'data', 'homes.json');
 
 module.exports = class Home {
-  constructor(houseName, price, location, rating, photoUrl) {
+  constructor(houseName, price, location, rating, photoUrl,description) {
     this.houseName = houseName;
     this.price = price;
     this.location = location;
     this.rating = rating;
     this.photoUrl = photoUrl;
+    this.description=description;
   }
 
-  save(callback) {
-    Home.fetchAll(registeredHomes => {
-      if (this.id) {
-        registeredHomes=registeredHomes.map(home=>home.id !== this.id ? home : this);
-      }else{
-        this.id = Math.random().toString();
-        registeredHomes.push(this);
-      }
-      fs.writeFile(homeFilePath, JSON.stringify(registeredHomes), callback);
-    });
+  save() {
+    return airbnbDb.execute(`INSERT INTO homes (houseName,price,location,rating,photoUrl,description) VALUES(?,?,?,?,?,?)`,[this.houseName,this.price,this.location,this.rating,this.photoUrl,this.description]);
   }
 
-  static fetchAll(callback) {
-    fs.readFile(homeFilePath, (err, data) => {
-      if (err) {
-        callback([]);
-      } else {
-        callback(JSON.parse(data));
-      }
-    })
+  static fetchAll() {
+    return airbnbDb.execute("SELECT * FROM homes");
   }
 
-  static findById(homeId, callback) {
-    Home.fetchAll(homes => {
-      const home = homes.find(home => home.id === homeId);
-      callback(home);
-    })
+  static findById(homeId) {
+   return airbnbDb.execute("SELECT * FROM homes WHERE id=?",[homeId]);
   }
-  static deleteById(homeId, callback) {
-    Home.fetchAll(homes => {
-      const newHomes=homes.filter(home => home.id !== homeId);
-      fs.writeFile(homeFilePath, JSON.stringify(newHomes), callback);
-    })
+  static deleteById(homeId) {
+  return airbnbDb.execute("DELETE FROM homes WHERE id=?",[homeId]);
   }
 }
