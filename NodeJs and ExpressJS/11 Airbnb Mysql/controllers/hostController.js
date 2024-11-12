@@ -26,12 +26,11 @@ exports.postEditHome=(req,res,next)=>{
   const {id,houseName, price, location, rating, photoUrl,description} = req.body;
   const newHome = new Home(houseName, price, location, rating, photoUrl,description);
   newHome.id=id;
-  newHome.save((error)=>{
-    if (error) {
-      console.log("Error while updating home");
-    } else{
-      res.redirect("/host/host-homes");
-    }
+  newHome.save().then(()=>{
+    res.redirect("/host/host-homes");
+  }).catch(err=>{
+    console.log("Error while updating home",err);
+    req.redirect("/host/host-homes");
   })
 }
 
