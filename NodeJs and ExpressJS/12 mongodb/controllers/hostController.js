@@ -11,8 +11,7 @@ exports.getEditHome = (req, res, next) => {
     console.log("Editing flag not set properly");
     return res.redirect("/host/host-homes");
   }
-  Home.findById(homeId).then(([homes])=>{
-    const home=homes[0];
+  Home.findById(homeId).then(home=>{
     if (!home) {
       console.log("Home not found for editing");
       return res.redirect("/host/host-homes");
@@ -24,16 +23,13 @@ exports.getEditHome = (req, res, next) => {
 
 exports.postEditHome=(req,res,next)=>{
   const {id,houseName, price, location, rating, photoUrl,description} = req.body;
-  const newHome = new Home(houseName, price, location, rating, photoUrl,description);
-  newHome.id=id;
-  newHome.save((error)=>{
-    if (error) {
-      console.log("Error while updating home");
-    } else{
-      res.redirect("/host/host-homes");
-    }
-  })
-}
+  const newHome = new Home(houseName, price, location, rating, photoUrl,description,id);
+  newHome.save().then(error=>{
+    res.redirect("/host/host-homes");
+  }).catch(error=>{
+    console.log('Error while updating home',error);
+  });
+};
 
 exports.postDeleteHome = (req, res, next) => {
   const homeId = req.params.homeId;
@@ -44,7 +40,7 @@ exports.postDeleteHome = (req, res, next) => {
 };
 
 exports.getHostHomes = (req, res, next) => {
-  Home.fetchAll().then(([registeredHomes])=>{
+  Home.fetchAll().then(registeredHomes=>{
     res.render("host/host-homes", { homes: registeredHomes, pageTitle: "Tumahara airbnb" });
   });
 };
@@ -53,7 +49,7 @@ exports.postAddHome = (req, res, next) => {
   const {houseName, price, location, rating, photoUrl,description} = req.body;
   const newHome = new Home(houseName, price, location, rating, photoUrl,description);
   newHome.save().then((rows)=>{
-    res.render("host/home-added", {pageTitle: 'Home Hosted'})
+    res.redirect("/host/host-homes");
   });
 };
 
