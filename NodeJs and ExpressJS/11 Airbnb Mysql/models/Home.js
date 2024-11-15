@@ -18,7 +18,6 @@ module.exports = class Home {
     } else {
       return airbnbDb.execute(`INSERT INTO homes (houseName,price,location,rating,photoUrl,description) VALUES(?,?,?,?,?,?)`,[this.houseName,this.price,this.location,this.rating,this.photoUrl,this.description]);
     }
-    
   }
 
   static fetchAll() {
