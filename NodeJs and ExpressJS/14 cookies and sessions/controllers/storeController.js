@@ -6,21 +6,21 @@ exports.getIndex = (req, res, next) => {
     res.render("store/index",{
       homes:registeredHomes,
       pageTitle:"Tumahara airbnb"
-      ,isLoggedIn:req.isLoggedIn
+      ,isLoggedIn:req.session.isLoggedIn
     });
   });
 };
 
 exports.getHomes = (req, res, next) => {
   Home.find().then(registeredHomes=>{
-    res.render("store/homes", { homes: registeredHomes, pageTitle: "Tumahara airbnb" ,isLoggedIn:req.isLoggedIn});
+    res.render("store/homes", { homes: registeredHomes, pageTitle: "Tumahara airbnb" ,isLoggedIn:req.session.isLoggedIn});
   });
 };
 
 exports.getFavourites = (req, res, next) => {
   Favourite.find().populate("homeId").then((favIdHomes) => {
       const favouriteHomes=favIdHomes.map((favIdHome)=>favIdHome.homeId);
-      res.render("store/favourites", { homes: favouriteHomes, pageTitle: "Favourites" ,isLoggedIn:req.isLoggedIn
+      res.render("store/favourites", { homes: favouriteHomes, pageTitle: "Favourites" ,isLoggedIn:req.session.isLoggedIn
 
       });
     });
@@ -44,7 +44,7 @@ exports.getHomeDetails = (req, res, next) => {
       console.log("Home not found");
       return res.redirect("/homes");
     }
-    res.render("store/home-detail",{home:home,pageTitle:"Home Detail",isLoggedIn:req.isLoggedIn})
+    res.render("store/home-detail",{home:home,pageTitle:"Home Detail",isLoggedIn:req.session.isLoggedIn})
   })
 }
 exports.postRemoveFavourite=(req,res,next)=>{
