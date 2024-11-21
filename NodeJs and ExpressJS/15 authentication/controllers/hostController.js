@@ -1,7 +1,7 @@
 const Home = require('./../models/Home');
 
 exports.getAddHome = (req, res, next) => {
-  res.render("host/edit-home", {editing:false,pageTitle: 'Host Your Home',isLoggedIn:req.session.isLoggedIn});
+  res.render("host/edit-home", {editing:false,pageTitle: 'Host Your Home',isLoggedIn:req.session.isLoggedIn , user:req.session.user});
 };
 
 exports.getEditHome = (req, res, next) => {
@@ -17,7 +17,7 @@ exports.getEditHome = (req, res, next) => {
       return res.redirect("/host/host-homes");
     }
     console.log(homeId,editing,home);
-    res.render("host/edit-home", {home:home,editing:editing,pageTitle: 'Edit Your Home',isLoggedIn:req.session.isLoggedIn});
+    res.render("host/edit-home", {home:home,editing:editing,pageTitle: 'Edit Your Home',isLoggedIn:req.session.isLoggedIn, user:req.session.user});
   })
 };
 
@@ -50,14 +50,14 @@ exports.postDeleteHome = (req, res, next) => {
 };
 
 exports.getHostHomes = (req, res, next) => {
-  Home.find().then(registeredHomes=>{
-    res.render("host/host-homes", { homes: registeredHomes, pageTitle: "Tumahara airbnb" ,isLoggedIn:req.session.isLoggedIn});
+  Home.find({host: req.session.user._id}).then(registeredHomes=>{
+    res.render("host/host-homes", { homes: registeredHomes, pageTitle: "Tumahara airbnb" ,isLoggedIn:req.session.isLoggedIn ,user:req.session.user});
   });
 };
 
 exports.postAddHome = (req, res, next) => {
   const {houseName, price, location, rating, photoUrl,description} = req.body;
-  const newHome = new Home({houseName, price, location, rating, photoUrl,description});
+  const newHome = new Home({houseName, price, location, rating, photoUrl,description,host:req.session.user._id});
   newHome.save().then(()=>{
     res.redirect("/host/host-homes");
   });

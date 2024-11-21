@@ -1,40 +1,54 @@
-const Favourite = require("../models/Favourite");
 const Home = require("./../models/Home");
-
+const User=require("./../models/User");
 exports.getIndex = (req, res, next) => {
   Home.find().then(registeredHomes=>{
     res.render("store/index",{
       homes:registeredHomes,
       pageTitle:"Tumahara airbnb"
-      ,isLoggedIn:req.session.isLoggedIn
+      ,isLoggedIn:req.session.isLoggedIn,
+      user:req.session.user
+
     });
   });
 };
 
 exports.getHomes = (req, res, next) => {
   Home.find().then(registeredHomes=>{
-    res.render("store/homes", { homes: registeredHomes, pageTitle: "Tumahara airbnb" ,isLoggedIn:req.session.isLoggedIn});
+    res.render("store/homes", { homes: registeredHomes, pageTitle: "Tumahara airbnb" ,isLoggedIn:req.session.isLoggedIn, user:req.session.user});
   });
 };
 
-exports.getFavourites = (req, res, next) => {
-  Favourite.find().populate("homeId").then((favIdHomes) => {
-      const favouriteHomes=favIdHomes.map((favIdHome)=>favIdHome.homeId);
-      res.render("store/favourites", { homes: favouriteHomes, pageTitle: "Favourites" ,isLoggedIn:req.session.isLoggedIn
-
-      });
+exports.getFavourites =async (req, res, next) => {
+  const userId=req.session.user._id;
+  try{
+    const user= await User.findById(userId).populate("favouriteHomes");
+    res.render("store/favourites", 
+      { homes: user.favouriteHomes, 
+        pageTitle: "Favourites" ,
+        isLoggedIn:req.session.isLoggedIn, 
+        user:req.session.user
     });
+  }catch(err){
+    log.error(err);
+    res.redirect("/");
+  }
 };
 
-exports.postAddFavourites = (req, res, next) => {
+exports.postAddFavourites = async (req, res, next) => {
   const homeId = req.body.id;
-  const fav=new Favourite({homeId});
-  fav.save().then(()=>{
+  const userId = req.session.user._id;
+
+  try{
+    const user= await User.findOne({_id:userId});
+    if(!user.favouriteHomes.includes(homeId)){
+      user.favouriteHomes.push(homeId);
+      await user.save();
+    }
+  }catch(err){
+    console.log(err);
+  }finally{
     res.redirect("/favourites");
-  }).catch(err=>{
-    console.log('Error while adding to favourites',err);
-    res.redirect("/favourites");
-  })
+  }  
 };
 
 exports.getHomeDetails = (req, res, next) => {
@@ -44,7 +58,7 @@ exports.getHomeDetails = (req, res, next) => {
       console.log("Home not found");
       return res.redirect("/homes");
     }
-    res.render("store/home-detail",{home:home,pageTitle:"Home Detail",isLoggedIn:req.session.isLoggedIn})
+    res.render("store/home-detail",{home:home,pageTitle:"Home Detail",isLoggedIn:req.session.isLoggedIn, user:req.session.user})
   })
 }
 exports.postRemoveFavourite=(req,res,next)=>{

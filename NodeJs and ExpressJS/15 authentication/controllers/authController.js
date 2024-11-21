@@ -1,5 +1,6 @@
 const {check, validationResult} = require('express-validator');
 const User = require('../models/User');
+const bcrypt=require('bcryptjs');
 
 exports.getLogin = (req, res, next) => {
   res.render('auth/login', {pageTitle: 'Login' ,isLoggedIn:false});
@@ -9,9 +10,30 @@ exports.getSignup = (req, res, next) => {
   res.render('auth/signup', {pageTitle: 'Signup' ,isLoggedIn:false});
 }
 
-exports.postLogin=(req,res,next)=>{
-  req.session.isLoggedIn=true;
-  res.redirect("/");
+exports.postLogin=async (req,res,next)=>{
+  const {email,password}=req.body;
+  try {
+    const user= await User.findOne({email});
+    if (!user) {
+      throw new Error('User not found');
+    }
+    const isMatch= await bcrypt.compare(password,user.password);
+    if (!isMatch) {
+      throw new Error('Invalid password');
+    }
+    req.session.isLoggedIn=true;
+    req.session.user=user;
+    res.redirect("/");
+
+  } catch(err){
+    res.render('auth/login', {
+      pageTitle:'Login',
+      isLoggedIn:false,
+      errorMessages:[err.message],
+    }
+    );
+  }
+  
 }
 
 
@@ -78,19 +100,23 @@ exports.postSignup=[
       })
     }
     const {firstName,lastName,email,password,userType}=req.body;
-    const user=new User({firstName,lastName,email,password,userType});
-    user.save().then(result=>{
-      console.log('User Created');
-      res.redirect("/login");
-    }).catch(error=>{
-      return res.status(422).render('auth/signup',
-        {
-        pageTitle:'Signup',
-        isLoggedIn:false,
-        errorMessages:errors.array().map(err=>err.msg),
-        oldInput:req.body,
-        })
-  })
+    bcrypt.hash(password,12).then(hashedPassword=>{
+      console.log(hashedPassword);
+      
+      const user=new User({firstName,lastName,email,password:hashedPassword,userType});
+      user.save().then(result=>{
+        res.redirect("/login");
+      }).catch(error=>{
+        return res.status(422).render('auth/signup',
+          {
+          pageTitle:'Signup',
+          isLoggedIn:false,
+          errorMessages:errors.array().map(err=>err.msg),
+          oldInput:req.body,
+          })
+    })
+    })
+    
   }
 ];
 exports.postLogout=(req,res,next)=>{
