@@ -1,0 +1,18 @@
+*{
+  margin: 0px;
+}
+.enter input{
+  height: 50px;
+  border-color: rgba(82, 81, 81, 0.877);
+  border-radius:0;
+  width: 350px;
+  
+}
+.date input{
+  height: 50px;
+  border-color: black;
+  border-radius:0;
+  width: 100px;
+  margin: 0px;
+}
+

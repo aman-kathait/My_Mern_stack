@@ -1,0 +1,11 @@
+*{
+  border: none;
+}
+.firstrow{
+  margin-left:px;
+}
+.btn{
+  height: 50px;
+  width: 80px;
+  border-radius: 12px;
+}
