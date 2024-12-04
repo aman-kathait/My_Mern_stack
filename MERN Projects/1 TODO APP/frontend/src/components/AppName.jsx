@@ -1,6 +1,9 @@
-import "./AppName.css";
-const AppName=()=>{
-  return <div><h1>Todo App</h1></div>
-  
+const AppName = () => {
+  return (
+    <h1 className="text-4xl font-bold text-gray-800 mb-8 mt-6 text-center">
+      Todo App
+    </h1>
+  );
 }
+
 export default AppName;
